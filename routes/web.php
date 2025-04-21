@@ -49,6 +49,7 @@ Route::middleware('check.access')->group(function() {
     Route::put('/employees-data/{employee}', [EmployeesController::class, 'update'])->name('employees-data.update');
     Route::delete('/employees-data/{employee}', [EmployeesController::class, 'destroy'])->name('employees-data.destroy');
     Route::get('/departments-data', [DepartmentsController::class, 'index'])->name('departments-data');
+    Route::post('/departments-data/import', [DepartmentsController::class, 'import'])->name('departments-data.import');
     Route::get('/departments-data/create', [DepartmentsController::class, 'create'])->name('departments-data.create');
     Route::get('/departments-data/print', [DepartmentsController::class, 'print'])->name('departments-data.print');
     Route::get('/departments-data/{department}', [DepartmentsController::class, 'show'])->name('departments-data.show');

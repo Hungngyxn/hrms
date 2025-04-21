@@ -14,10 +14,21 @@
       <div class="bg-light text-dark card p-3 overflow-auto">
         <div class="d-flex justify-content-between">
           @if (collect($accesses)->where('menu_id', 2)->first()->status == 2)
+          <div class="d-flex gap-2 w-100">
             <a href="{{ route('departments-data.create') }}" class="btn btn-outline-dark mb-3 w-25">
-              <i class="fas fa-plus mr-1"></i>
-                <span> Create</span>
+              <i class="fas fa-keyboard mr-1"></i>
+              Import Manual
             </a>
+
+            <form action="{{ route('departments-data.import') }}" method="POST" enctype="multipart/form-data" class="d-flex w-100">
+              @csrf
+              <input type="file" name="file" accept=".xlsx,.xls" required class="form-control mb-3 me-2">
+              <button type="submit" class="btn btn-outline-primary mb-3">
+                <i class="fas fa-file-import mr-1"></i>
+                Import Excel
+              </button>
+            </form>
+          </div>
           @endif
           <a href="{{ route('departments-data.print') }}" class="btn btn-outline-dark mb-3 w-25" target="_blank">
             <i class="fas fa-print mr-1"></i>
@@ -28,6 +39,11 @@
         @if (session('status'))
           <div class="alert alert-success">
             {{ session('status') }}
+          </div>
+        @endif
+        @if (session('error'))
+          <div class="alert alert-danger">
+            {{ session('error') }}
           </div>
         @endif
 

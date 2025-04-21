@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDepartmentRequest;
+use App\Imports\DepartmentsImport;
 use App\Models\Department;
 use App\Models\Log;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DepartmentsController extends Controller
 {
@@ -116,4 +118,26 @@ class DepartmentsController extends Controller
         $departments = Department::all();
         return view('pages.departments-data_print', compact('departments'));
     }
-}
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls',
+        ]);
+
+        $import = new DepartmentsImport();
+
+        try {
+            Excel::import($import, $request->file('file'));
+    
+            if (count($import->skippedCodes) > 0) {
+                return redirect()->route('departments-data')->with('error', 
+                    'Imported with some skipped codes: ' . implode(', ', $import->skippedCodes));
+            }
+    
+            return redirect()->route('departments-data')->with('status', 'Imported successfully!');
+        } catch (\Exception $e) {
+            return redirect()->route('departments-data')->with('error', 'Lỗi khi import: ' . $e->getMessage());
+        }
+    }
+    }
