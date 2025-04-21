@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EmployeesExport;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Models\Department;
 use App\Models\Employee;
@@ -13,6 +14,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class EmployeesController extends Controller
@@ -199,9 +201,8 @@ class EmployeesController extends Controller
         return redirect()->route('employees-data')->with('status', 'Successfully deleted an employee.');
     }
 
-    public function print() {
-        $employees = Employee::all();
-
-        return view('pages.employees-data_print', compact('employees'));
+    public function exportEmployees()
+    {
+        return Excel::download(new EmployeesExport, 'employees.xlsx');
     }
 }

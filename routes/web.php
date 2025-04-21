@@ -37,19 +37,12 @@ Auth::routes([
     'reset' => false
 ]);
 
-Route::get('/', [WelcomeController::class, 'index'])->name('welcome')->middleware('guest');
-Route::get('/welcome/announcements', [WelcomeController::class, 'announcements'])->name('welcome.announcements')->middleware('guest');
-Route::get('/welcome/announcements/{announcement}', [WelcomeController::class, 'announcementShow'])->name('welcome.announcements.show')->middleware('guest');
-Route::get('/welcome/recruitments', [WelcomeController::class, 'recruitments'])->name('welcome.recruitments')->middleware('guest');
-Route::get('/welcome/recruitments/{recruitment}', [WelcomeController::class, 'recruitmentShow'])->name('welcome.recruitments.show')->middleware('guest');
-Route::post('/recruitment-candidates', [RecruitmentCandidatesController::class, 'store'])->name('recruitment-candidates.store');
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::middleware('check.access')->group(function() {
     Route::get('/employees-data', [EmployeesController::class, 'index'])->name('employees-data');
     Route::get('/employees-data/create', [EmployeesController::class, 'create'])->name('employees-data.create');
-    Route::get('/employees-data/print', [EmployeesController::class, 'print'])->name('employees-data.print');
+    Route::get('/employees-data/print', [EmployeesController::class, 'exportEmployees'])->name('employees-data.export');
     Route::get('/employees-data/{employee}', [EmployeesController::class, 'show'])->name('employees-data.show');
     Route::get('/employees-data/{employee}/edit', [EmployeesController::class, 'edit'])->name('employees-data.edit');
     Route::post('/employees-data', [EmployeesController::class, 'store'])->name('employees-data.store');

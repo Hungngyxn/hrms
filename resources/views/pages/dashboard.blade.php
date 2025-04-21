@@ -9,11 +9,6 @@
             </div>
         </div>
 
-        @if (!$checkForAttendance)
-            <div class="alert alert-warning">
-                <h5 class="font-weight-bold">Don't forget to check in / out !</h5>
-            </div>
-        @endif
 
         @if (auth()->user()->isAdmin())
             <div class="row">

@@ -204,7 +204,7 @@
               <div class="col-sm-12 col-lg-6">
                 <div class="form-group">
                   <label for="photo">Photo:</label>
-                  <input type="file" name="photo" id="photo" class="form-control-file @error('photo') is-invalid @enderror" required>
+                  <input type="file" name="photo" id="photo" class="form-control-file @error('photo') is-invalid @enderror">
                 </div>
                 @error('photo')
                   <div class="alert alert-danger">{{ $message }}</div>
@@ -213,7 +213,7 @@
               <div class="col-sm-12 col-lg-6">
                 <div class="form-group">
                   <label for="cv">CV:</label>
-                  <input type="file" name="cv" id="cv" class="form-control-file @error('cv') is-invalid @enderror" required>
+                  <input type="file" name="cv" id="cv" class="form-control-file @error('cv') is-invalid @enderror">
                 </div>
                 @error('cv')
                   <div class="alert alert-danger">{{ $message }}</div>
